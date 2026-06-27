@@ -6,6 +6,10 @@
   "scripts": {
     "dev": "electron-vite dev",
     "build": "electron-vite build && electron-builder",
+    "build:mac": "electron-vite build && electron-builder --mac",
+    "build:linux": "electron-vite build && electron-builder --linux",
+    "build:win": "electron-vite build && electron-builder --win",
+    "build:dir": "electron-vite build && electron-builder --dir",
     "preview": "electron-vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
     "lint": "eslint src --ext .ts,.tsx",
