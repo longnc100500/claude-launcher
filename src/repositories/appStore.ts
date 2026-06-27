@@ -12,8 +12,23 @@ export interface StoredProfile {
   readonly icon: string | null
 }
 
+export interface AppSettingsStored {
+  claudeBinaryPath: string | null
+  dataDir: string
+  theme: 'system' | 'light' | 'dark'
+  launchOnStartup: boolean
+}
+
+export const DEFAULT_SETTINGS: AppSettingsStored = {
+  claudeBinaryPath: null,
+  dataDir: '',
+  theme: 'system',
+  launchOnStartup: false,
+}
+
 export interface AppStoreSchema {
   profiles: Record<string, StoredProfile>
+  settings: AppSettingsStored
 }
 
 export type AppStore = Store<AppStoreSchema>
@@ -23,6 +38,7 @@ export function createAppStore(): AppStore {
     name: 'claude-launcher',
     defaults: {
       profiles: {},
+      settings: DEFAULT_SETTINGS,
     },
   })
 }

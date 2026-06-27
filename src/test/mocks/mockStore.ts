@@ -12,6 +12,12 @@ export interface MockableStore {
 export class MockStore implements MockableStore {
   private data: StoreData = {
     profiles: {},
+    settings: {
+      claudeBinaryPath: null,
+      dataDir: '',
+      theme: 'system',
+      launchOnStartup: false,
+    },
   }
 
   get<K extends keyof StoreData>(key: K, defaultValue: StoreData[K]): StoreData[K] {
@@ -36,6 +42,14 @@ export class MockStore implements MockableStore {
   }
 
   reset(): void {
-    this.data = { profiles: {} }
+    this.data = {
+      profiles: {},
+      settings: {
+        claudeBinaryPath: null,
+        dataDir: '',
+        theme: 'system',
+        launchOnStartup: false,
+      },
+    }
   }
 }
