@@ -1,6 +1,49 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
+import { IPC_CHANNELS } from '../shared/ipc/channels'
+import type { ProfileId, CreateProfileInput, UpdateProfileInput } from '../domain/profile'
+import type { AppSettings } from '../domain/settings'
+import type { ClaudeApi } from '../shared/types/window-api'
 
-// Stub — will be replaced with full typed API in PR-10
+const profilesApi: ClaudeApi['profiles'] = {
+  list: () =>
+    ipcRenderer.invoke(IPC_CHANNELS.PROFILES_LIST),
+
+  get: (id: ProfileId) =>
+    ipcRenderer.invoke(IPC_CHANNELS.PROFILES_GET, { id }),
+
+  create: (input: CreateProfileInput) =>
+    ipcRenderer.invoke(IPC_CHANNELS.PROFILES_CREATE, input),
+
+  update: (id: ProfileId, updates: UpdateProfileInput) =>
+    ipcRenderer.invoke(IPC_CHANNELS.PROFILES_UPDATE, { id, updates }),
+
+  delete: (id: ProfileId) =>
+    ipcRenderer.invoke(IPC_CHANNELS.PROFILES_DELETE, { id }),
+}
+
+const launcherApi: ClaudeApi['launcher'] = {
+  start: (profileId: ProfileId) =>
+    ipcRenderer.invoke(IPC_CHANNELS.LAUNCHER_START, { profileId }),
+
+  stop: (profileId: ProfileId) =>
+    ipcRenderer.invoke(IPC_CHANNELS.LAUNCHER_STOP, { id: profileId }),
+
+  status: (profileId: ProfileId) =>
+    ipcRenderer.invoke(IPC_CHANNELS.LAUNCHER_STATUS, { id: profileId }),
+}
+
+const settingsApi: ClaudeApi['settings'] = {
+  get: () =>
+    ipcRenderer.invoke(IPC_CHANNELS.SETTINGS_GET),
+
+  save: (settings: AppSettings) =>
+    ipcRenderer.invoke(IPC_CHANNELS.SETTINGS_SAVE, settings),
+}
+
+export type { ClaudeApi }
+
 contextBridge.exposeInMainWorld('claudeApi', {
-  version: '0.0.1',
+  profiles: profilesApi,
+  launcher: launcherApi,
+  settings: settingsApi,
 })

@@ -22,6 +22,8 @@
   },
   "include": [
     "src/renderer/src/**/*",
-    "src/renderer/index.html"
+    "src/renderer/index.html",
+    "src/shared/**/*",
+    "src/domain/**/*"
   ]
 }
