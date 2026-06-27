@@ -5,6 +5,7 @@ import reactPlugin from 'eslint-plugin-react'
 import reactHooksPlugin from 'eslint-plugin-react-hooks'
 
 export default [
+  { ignores: ['out/**', 'dist/**', 'coverage/**', 'node_modules/**'] },
   js.configs.recommended,
   {
     files: ['src/**/*.{ts,tsx}'],
@@ -32,8 +33,11 @@ export default [
       ...tsPlugin.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-empty-object-type': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
+      // TypeScript handles undefined variable checking — no-undef produces false positives for DOM types
+      'no-undef': 'off',
     },
     settings: {
       react: { version: 'detect' },

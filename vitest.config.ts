@@ -6,6 +6,9 @@ export default defineConfig({
     environment: 'node',
     globals: false,
     setupFiles: ['./src/test/setup.ts'],
+    environmentMatchGlobs: [
+      ['src/renderer/**', 'jsdom'],
+    ],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov', 'html'],
