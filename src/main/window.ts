@@ -11,7 +11,7 @@ export function createWindow(): BrowserWindow {
     show: false,
     title: 'Claude Launcher',
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../preload/index.mjs'),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,

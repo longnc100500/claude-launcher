@@ -4,7 +4,7 @@
   "description": "Run multiple isolated Claude Desktop profiles",
   "main": "out/main/index.js",
   "scripts": {
-    "dev": "electron-vite dev",
+    "dev": "ELECTRON_EXEC_PATH=$(node -e \"console.log(require('electron'))\") electron-vite dev",
     "build": "electron-vite build && electron-builder",
     "build:mac": "electron-vite build && electron-builder --mac",
     "build:linux": "electron-vite build && electron-builder --linux",
