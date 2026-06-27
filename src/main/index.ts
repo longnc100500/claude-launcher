@@ -1,5 +1,6 @@
 import { app, ipcMain, BrowserWindow } from 'electron'
 import { createWindow } from './window'
+import { createTray } from './tray'
 import { createAppStore, DEFAULT_SETTINGS } from '../repositories/appStore'
 import { ProfileRepository } from '../repositories/profileRepository'
 import { SettingsRepository } from '../repositories/settingsRepository'
@@ -49,6 +50,7 @@ app.whenReady().then(() => {
 
   // Create main window
   _mainWindow = createWindow()
+  createTray(() => _mainWindow)
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

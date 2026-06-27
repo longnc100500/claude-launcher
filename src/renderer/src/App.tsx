@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { SettingsPage } from './components/SettingsPage'
 import { useProfiles } from './hooks/useProfiles'
 import { useCreateProfile } from './hooks/useCreateProfile'
 import { useUpdateProfile } from './hooks/useUpdateProfile'
@@ -20,6 +21,7 @@ export default function App(): React.JSX.Element {
   const { deleteProfile, isLoading: isDeleting } = useDeleteProfile()
   const { runningProfileIds, launch, stop } = useLaunchStatus()
 
+  const [showSettings, setShowSettings] = useState(false)
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null)
   const [deletingProfile, setDeletingProfile] = useState<Profile | null>(null)
@@ -60,11 +62,14 @@ export default function App(): React.JSX.Element {
           <h1 className="text-xl font-semibold text-gray-900">Claude Launcher</h1>
           <div className="flex gap-2">
             <Button onClick={() => setShowCreateDialog(true)}>New Profile</Button>
-            <Button variant="outline" size="sm">Settings</Button>
+            <Button variant="outline" size="sm" onClick={() => setShowSettings(true)}>Settings</Button>
           </div>
         </div>
       </header>
       <main className="p-6">
+        {showSettings ? (
+          <SettingsPage onClose={() => setShowSettings(false)} />
+        ) : (
         <ProfileList
           profiles={profiles}
           isLoading={isLoading}
@@ -86,6 +91,7 @@ export default function App(): React.JSX.Element {
           onDelete={setDeletingProfile}
           onCreateNew={() => setShowCreateDialog(true)}
         />
+        )}
       </main>
       <CreateProfileDialog
         isOpen={showCreateDialog}
