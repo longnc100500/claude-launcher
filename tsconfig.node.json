@@ -21,6 +21,11 @@
   "include": [
     "src/main/**/*",
     "src/preload/**/*",
+    "src/shared/**/*",
+    "src/domain/**/*",
+    "src/services/**/*",
+    "src/repositories/**/*",
+    "src/test/**/*",
     "electron.vite.config.*",
     "electron-builder.config.*"
   ]

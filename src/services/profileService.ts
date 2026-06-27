@@ -92,12 +92,13 @@ export class ProfileService {
     }
 
     if (input.name !== undefined) {
-      const validation = this.validateName(input.name)
+      const inputName = input.name
+      const validation = this.validateName(inputName)
       if (!validation.ok) return validation
 
       const existing = await this.repo.findAll()
-      if (existing.some((p) => p.name === input.name.trim() && p.id !== id)) {
-        return Err(new ProfileAlreadyExistsError(input.name))
+      if (existing.some((p) => p.name === inputName.trim() && p.id !== id)) {
+        return Err(new ProfileAlreadyExistsError(inputName))
       }
     }
 

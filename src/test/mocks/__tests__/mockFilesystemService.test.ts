@@ -61,7 +61,7 @@ describe('MockFilesystemService', () => {
       mock.addDirectory('/parent/child2')
       mock.addDirectory('/parent/child1/grandchild')
       const result = await mock.readdir('/parent')
-      expect(result.sort()).toEqual(['child1', 'child2'])
+      expect([...result].sort()).toEqual(['child1', 'child2'])
     })
   })
 

@@ -25,13 +25,13 @@ export class MockStore implements MockableStore {
     // Handle dot-notation keys like "profiles.some-id"
     const parts = key.split('.')
     if (parts.length === 1) {
-      ;(this.data as Record<string, unknown>)[key] = value
+      ;(this.data as unknown as Record<string, unknown>)[key] = value
     } else {
       const [root, ...rest] = parts
-      const nested = (this.data as Record<string, Record<string, unknown>>)[root ?? ''] ?? {}
+      const nested = (this.data as unknown as Record<string, Record<string, unknown>>)[root ?? ''] ?? {}
       const nestedKey = rest.join('.')
       nested[nestedKey] = value
-      ;(this.data as Record<string, unknown>)[root ?? ''] = nested
+      ;(this.data as unknown as Record<string, unknown>)[root ?? ''] = nested
     }
   }
 

@@ -79,7 +79,7 @@ describe('FilesystemService', () => {
       await service.mkdir(join(testRoot, 'sub1'), { recursive: true })
       await service.mkdir(join(testRoot, 'sub2'), { recursive: true })
       const result = await service.readdir(testRoot)
-      expect(result.sort()).toEqual(['sub1', 'sub2'])
+      expect([...result].sort()).toEqual(['sub1', 'sub2'])
     })
   })
 })
