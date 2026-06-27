@@ -42,7 +42,7 @@ describe('CreateProfileDialog', () => {
     render(<CreateProfileDialog {...defaultProps} onSubmit={onSubmit} />)
     await userEvent.type(screen.getByLabelText('Profile name'), '  Work  ')
     await userEvent.click(screen.getByRole('button', { name: 'Create' }))
-    expect(onSubmit).toHaveBeenCalledWith('Work')
+    expect(onSubmit).toHaveBeenCalledWith('Work', null)
   })
 
   it('shows server-side error from props', () => {

@@ -64,17 +64,22 @@ export function ProfileList({
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div
+      role="list"
+      aria-label="Profile list"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+    >
       {profiles.map((profile) => (
-        <ProfileCard
-          key={profile.id}
-          profile={profile}
-          isRunning={runningProfileIds.has(profile.id)}
-          onLaunch={onLaunch}
-          onStop={onStop}
-          onEdit={onEdit}
-          onDelete={onDelete}
-        />
+        <div key={profile.id} role="listitem">
+          <ProfileCard
+            profile={profile}
+            isRunning={runningProfileIds.has(profile.id)}
+            onLaunch={onLaunch}
+            onStop={onStop}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        </div>
       ))}
     </div>
   )

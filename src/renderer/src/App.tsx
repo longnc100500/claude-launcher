@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts'
 import { SettingsPage } from './components/SettingsPage'
 import { useProfiles } from './hooks/useProfiles'
 import { useCreateProfile } from './hooks/useCreateProfile'
@@ -26,8 +27,19 @@ export default function App(): React.JSX.Element {
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null)
   const [deletingProfile, setDeletingProfile] = useState<Profile | null>(null)
 
-  async function handleCreate(name: string): Promise<void> {
-    const profile = await createProfile({ name })
+  useKeyboardShortcuts({
+    onNewProfile: () => setShowCreateDialog(true),
+    onCloseDialog: () => {
+      if (showCreateDialog) { setShowCreateDialog(false); resetCreate() }
+      if (editingProfile) { setEditingProfile(null); resetUpdate() }
+      if (deletingProfile) { setDeletingProfile(null) }
+      if (showSettings) setShowSettings(false)
+    },
+    onOpenSettings: () => setShowSettings(true),
+  })
+
+  async function handleCreate(name: string, icon: string | null): Promise<void> {
+    const profile = await createProfile({ name, icon: icon ?? undefined })
     if (profile) {
       toast.success(`Profile "${profile.name}" created.`)
       setShowCreateDialog(false)
@@ -36,9 +48,9 @@ export default function App(): React.JSX.Element {
     }
   }
 
-  async function handleUpdate(name: string): Promise<void> {
+  async function handleUpdate(name: string, icon: string | null): Promise<void> {
     if (!editingProfile) return
-    const updated = await updateProfile(editingProfile.id, { name })
+    const updated = await updateProfile(editingProfile.id, { name, icon: icon ?? undefined })
     if (updated) {
       setEditingProfile(null)
       resetUpdate()

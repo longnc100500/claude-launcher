@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
+import { IconPicker } from './IconPicker'
 
 export interface CreateProfileDialogProps {
   isOpen: boolean
   isLoading: boolean
   error: string | null
-  onSubmit: (name: string) => void
+  onSubmit: (name: string, icon: string | null) => void
   onClose: () => void
 }
 
@@ -18,6 +19,7 @@ export function CreateProfileDialog({
   onClose,
 }: CreateProfileDialogProps): React.JSX.Element | null {
   const [name, setName] = useState('')
+  const [icon, setIcon] = useState<string | null>(null)
   const [validationError, setValidationError] = useState<string | null>(null)
 
   if (!isOpen) return null
@@ -34,11 +36,12 @@ export function CreateProfileDialog({
       return
     }
     setValidationError(null)
-    onSubmit(trimmed)
+    onSubmit(trimmed, icon)
   }
 
   function handleClose(): void {
     setName('')
+    setIcon(null)
     setValidationError(null)
     onClose()
   }
@@ -79,6 +82,9 @@ export function CreateProfileDialog({
                 {displayError}
               </p>
             )}
+          </div>
+          <div className="mb-4">
+            <IconPicker value={icon} onChange={setIcon} />
           </div>
           <div className="flex gap-2 justify-end">
             <Button type="button" variant="outline" onClick={handleClose} disabled={isLoading}>

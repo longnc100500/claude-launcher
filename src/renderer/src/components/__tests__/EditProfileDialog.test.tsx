@@ -47,7 +47,7 @@ describe('EditProfileDialog', () => {
     await userEvent.clear(input)
     await userEvent.type(input, 'Personal')
     await userEvent.click(screen.getByRole('button', { name: 'Save' }))
-    expect(onSubmit).toHaveBeenCalledWith('Personal')
+    expect(onSubmit).toHaveBeenCalledWith('Personal', null)
   })
 
   it('shows validation error for empty name', async () => {

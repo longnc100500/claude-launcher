@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
+import { IconPicker } from './IconPicker'
 import type { Profile } from '../../../domain/profile'
 
 export interface EditProfileDialogProps {
   profile: Profile | null
   isLoading: boolean
   error: string | null
-  onSubmit: (name: string) => void
+  onSubmit: (name: string, icon: string | null) => void
   onClose: () => void
 }
 
@@ -19,10 +20,14 @@ export function EditProfileDialog({
   onClose,
 }: EditProfileDialogProps): React.JSX.Element | null {
   const [name, setName] = useState('')
+  const [icon, setIcon] = useState<string | null>(null)
   const [validationError, setValidationError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (profile) setName(profile.name)
+    if (profile) {
+      setName(profile.name)
+      setIcon(profile.icon ?? null)
+    }
   }, [profile])
 
   if (!profile) return null
@@ -39,7 +44,7 @@ export function EditProfileDialog({
       return
     }
     setValidationError(null)
-    onSubmit(trimmed)
+    onSubmit(trimmed, icon)
   }
 
   function handleClose(): void {
@@ -76,6 +81,9 @@ export function EditProfileDialog({
             {displayError && (
               <p role="alert" className="mt-1 text-sm text-red-600">{displayError}</p>
             )}
+          </div>
+          <div className="mb-4">
+            <IconPicker value={icon} onChange={setIcon} />
           </div>
           <div className="flex gap-2 justify-end">
             <Button type="button" variant="outline" onClick={handleClose} disabled={isLoading}>
