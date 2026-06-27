@@ -1,15 +1,26 @@
 import React, { useState } from 'react'
 import { useProfiles } from './hooks/useProfiles'
 import { useCreateProfile } from './hooks/useCreateProfile'
+import { useUpdateProfile } from './hooks/useUpdateProfile'
+import { useDeleteProfile } from './hooks/useDeleteProfile'
+import { useLaunchStatus } from './hooks/useLaunchStatus'
 import { ProfileList } from './components/ProfileList'
 import { CreateProfileDialog } from './components/CreateProfileDialog'
+import { EditProfileDialog } from './components/EditProfileDialog'
+import { DeleteConfirmDialog } from './components/DeleteConfirmDialog'
 import { Button } from './components/ui/button'
 import type { Profile } from '../../domain/profile'
 
 export default function App(): React.JSX.Element {
   const { profiles, isLoading, error, refresh } = useProfiles()
   const { createProfile, isLoading: isCreating, error: createError, reset: resetCreate } = useCreateProfile()
+  const { updateProfile, isLoading: isUpdating, error: updateError, reset: resetUpdate } = useUpdateProfile()
+  const { deleteProfile, isLoading: isDeleting } = useDeleteProfile()
+  const { runningProfileIds, launch, stop } = useLaunchStatus()
+
   const [showCreateDialog, setShowCreateDialog] = useState(false)
+  const [editingProfile, setEditingProfile] = useState<Profile | null>(null)
+  const [deletingProfile, setDeletingProfile] = useState<Profile | null>(null)
 
   async function handleCreate(name: string): Promise<void> {
     const profile = await createProfile({ name })
@@ -20,25 +31,23 @@ export default function App(): React.JSX.Element {
     }
   }
 
-  function handleCloseDialog(): void {
-    setShowCreateDialog(false)
-    resetCreate()
+  async function handleUpdate(name: string): Promise<void> {
+    if (!editingProfile) return
+    const updated = await updateProfile(editingProfile.id, { name })
+    if (updated) {
+      setEditingProfile(null)
+      resetUpdate()
+      refresh()
+    }
   }
 
-  function handleLaunch(_profile: Profile): void {
-    // TODO: PR-21 — launch hook
-  }
-
-  function handleStop(_profile: Profile): void {
-    // TODO: PR-21 — stop hook
-  }
-
-  function handleEdit(_profile: Profile): void {
-    // TODO: PR-20 — edit dialog
-  }
-
-  function handleDelete(_profile: Profile): void {
-    // TODO: PR-20 — delete confirm dialog
+  async function handleDelete(): Promise<void> {
+    if (!deletingProfile) return
+    const ok = await deleteProfile(deletingProfile.id)
+    if (ok) {
+      setDeletingProfile(null)
+      refresh()
+    }
   }
 
   return (
@@ -57,11 +66,11 @@ export default function App(): React.JSX.Element {
           profiles={profiles}
           isLoading={isLoading}
           error={error}
-          runningProfileIds={new Set()}
-          onLaunch={handleLaunch}
-          onStop={handleStop}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
+          runningProfileIds={runningProfileIds}
+          onLaunch={(p) => void launch(p.id)}
+          onStop={(p) => void stop(p.id)}
+          onEdit={setEditingProfile}
+          onDelete={setDeletingProfile}
           onCreateNew={() => setShowCreateDialog(true)}
         />
       </main>
@@ -70,7 +79,20 @@ export default function App(): React.JSX.Element {
         isLoading={isCreating}
         error={createError}
         onSubmit={handleCreate}
-        onClose={handleCloseDialog}
+        onClose={() => { setShowCreateDialog(false); resetCreate() }}
+      />
+      <EditProfileDialog
+        profile={editingProfile}
+        isLoading={isUpdating}
+        error={updateError}
+        onSubmit={handleUpdate}
+        onClose={() => { setEditingProfile(null); resetUpdate() }}
+      />
+      <DeleteConfirmDialog
+        profile={deletingProfile}
+        isLoading={isDeleting}
+        onConfirm={handleDelete}
+        onClose={() => setDeletingProfile(null)}
       />
     </div>
   )
