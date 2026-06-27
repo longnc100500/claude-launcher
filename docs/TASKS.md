@@ -19,38 +19,38 @@
 
 ### PR-01: Project Scaffolding
 
-- [ ] Initialize project with `pnpm init`
-- [ ] Install Electron, Vite, React, TypeScript
-- [ ] Install `vite-plugin-electron` or `electron-vite`
-- [ ] Create `package.json` with all required scripts
-- [ ] Create `tsconfig.json` (base)
-- [ ] Create `tsconfig.main.json` (Node target, CJS)
-- [ ] Create `tsconfig.renderer.json` (Browser target, ESM)
-- [ ] Configure `vite.config.ts`
-- [ ] Install ESLint and configure `.eslintrc.json`
-- [ ] Install Prettier and configure `.prettierrc`
-- [ ] Create `.gitignore` with Electron defaults
-- [ ] Create `.editorconfig`
-- [ ] Create `src/main/index.ts` — main process entry point
-- [ ] Create `src/renderer/index.tsx` — React entry point
-- [ ] Create `src/preload/index.ts` — preload script placeholder
-- [ ] Create full folder structure per `ARCHITECTURE.md`
-- [ ] Verify `pnpm dev` launches an Electron window
-- [ ] Verify TypeScript strict mode is enabled
-- [ ] Commit: `chore: initial project scaffolding`
+- [x] Initialize project with `pnpm init`
+- [x] Install Electron, Vite, React, TypeScript
+- [x] Install `vite-plugin-electron` or `electron-vite`
+- [x] Create `package.json` with all required scripts
+- [x] Create `tsconfig.json` (base)
+- [x] Create `tsconfig.main.json` (Node target, CJS)
+- [x] Create `tsconfig.renderer.json` (Browser target, ESM)
+- [x] Configure `vite.config.ts`
+- [x] Install ESLint and configure `.eslintrc.json`
+- [x] Install Prettier and configure `.prettierrc`
+- [x] Create `.gitignore` with Electron defaults
+- [x] Create `.editorconfig`
+- [x] Create `src/main/index.ts` — main process entry point
+- [x] Create `src/renderer/index.tsx` — React entry point
+- [x] Create `src/preload/index.ts` — preload script placeholder
+- [x] Create full folder structure per `ARCHITECTURE.md`
+- [x] Verify `pnpm dev` launches an Electron window
+- [x] Verify TypeScript strict mode is enabled
+- [x] Commit: `chore: initial project scaffolding`
 
 ### PR-02: Testing Infrastructure
 
-- [ ] Install Vitest
-- [ ] Create `vitest.config.ts`
-- [ ] Configure coverage provider (v8)
-- [ ] Set coverage thresholds (domain/service: 90%, repo: 80%)
-- [ ] Create `src/test/setup.ts`
-- [ ] Create `src/test/mocks/` directory
-- [ ] Write and pass a first test (smoke test)
-- [ ] Add `test`, `test:watch`, `test:coverage` scripts
-- [ ] Verify `pnpm test:coverage` displays a report
-- [ ] Commit: `chore(test): configure vitest with coverage`
+- [x] Install Vitest
+- [x] Create `vitest.config.ts`
+- [x] Configure coverage provider (v8)
+- [x] Set coverage thresholds (domain/service: 90%, repo: 80%)
+- [x] Create `src/test/setup.ts`
+- [x] Create `src/test/mocks/` directory
+- [x] Write and pass a first test (smoke test)
+- [x] Add `test`, `test:watch`, `test:coverage` scripts
+- [x] Verify `pnpm test:coverage` displays a report
+- [x] Commit: `chore(test): configure vitest with coverage`
 
 ### PR-03: Domain Types & Interfaces
 
@@ -446,41 +446,41 @@
 
 ### PR-29: electron-builder Config
 
-- [ ] Install `electron-builder`
-- [ ] `electron-builder.config.ts`
-- [ ] macOS: dmg + zip, universal binary
-- [ ] Linux: AppImage + deb
-- [ ] Windows: NSIS installer
-- [ ] App icons (icns, ico, png 512x512)
-- [ ] `pnpm build` script
-- [ ] Commit: `chore(build): add electron-builder configuration`
+- [x] Install `electron-builder`
+- [x] `electron-builder.config.ts`
+- [x] macOS: dmg + zip, universal binary
+- [x] Linux: AppImage + deb
+- [x] Windows: NSIS installer
+- [x] App icons (icns, ico, png 512x512)
+- [x] `pnpm build` script
+- [x] Commit: `chore(build): add electron-builder configuration`
 
 ### PR-30: Auto-Updater
 
-- [ ] Install `electron-updater`
-- [ ] `src/main/updater.ts`
-- [ ] Auto-check on startup
-- [ ] UI notification when update available
-- [ ] Setting to disable auto-check
-- [ ] Commit: `feat(main): add auto-update support`
+- [x] Install `electron-updater`
+- [x] `src/main/updater.ts`
+- [x] Auto-check on startup
+- [x] UI notification when update available
+- [x] Setting to disable auto-check
+- [x] Commit: `feat(main): add auto-update support`
 
 ### PR-31: GitHub Actions CI/CD
 
-- [ ] `.github/workflows/ci.yml` — test on PR
-- [ ] `.github/workflows/release.yml` — build on tag
-- [ ] Matrix: macOS, Linux, Windows
-- [ ] Artifact upload
-- [ ] Commit: `ci: add github actions for ci and release`
+- [x] `.github/workflows/ci.yml` — test on PR
+- [x] `.github/workflows/release.yml` — build on tag
+- [x] Matrix: macOS, Linux, Windows
+- [x] Artifact upload
+- [x] Commit: `ci: add github actions for ci and release`
 
 ### PR-32: Documentation & README
 
-- [ ] `README.md` — installation, usage, screenshots
-- [ ] `CHANGELOG.md`
-- [ ] `LICENSE` (MIT)
-- [ ] `.github/ISSUE_TEMPLATE/bug_report.md`
-- [ ] `.github/ISSUE_TEMPLATE/feature_request.md`
-- [ ] `.github/pull_request_template.md`
-- [ ] Commit: `docs: add readme, changelog, and github templates`
+- [x] `README.md` — installation, usage, screenshots
+- [x] `CHANGELOG.md`
+- [x] `LICENSE` (MIT)
+- [x] `.github/ISSUE_TEMPLATE/bug_report.md`
+- [x] `.github/ISSUE_TEMPLATE/feature_request.md`
+- [x] `.github/pull_request_template.md`
+- [x] Commit: `docs: add readme, changelog, and github templates`
 
 ---
 
