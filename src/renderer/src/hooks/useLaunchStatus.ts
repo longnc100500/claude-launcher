@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import type { ProfileId } from '../../../domain/profile'
 import type { RunningProcess } from '../../../domain/launch'
 
@@ -53,6 +53,19 @@ export function useLaunchStatus(): UseLaunchStatusResult {
       setError(err instanceof Error ? err.message : 'Unknown error')
       return false
     }
+  }, [])
+
+  useEffect(() => {
+    const unsubscribe = window.claudeApi.launcher.onStatusChanged((data) => {
+      if (data.status === 'stopped') {
+        setRunningProfileIds((prev) => {
+          const next = new Set(prev)
+          next.delete(data.profileId)
+          return next
+        })
+      }
+    })
+    return unsubscribe
   }, [])
 
   return { runningProfileIds, launch, stop, isLaunching, error }

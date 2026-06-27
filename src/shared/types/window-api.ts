@@ -15,6 +15,7 @@ export type LauncherApi = {
   start: (profileId: ProfileId) => Promise<Result<RunningProcess>>
   stop: (profileId: ProfileId) => Promise<Result<void>>
   status: (profileId: ProfileId) => Promise<Result<LaunchStatus>>
+  onStatusChanged: (callback: (data: { profileId: string; status: string }) => void) => () => void
 }
 
 export type SettingsApi = {

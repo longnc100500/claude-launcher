@@ -9,6 +9,7 @@ export const IPC_CHANNELS = {
   LAUNCHER_STATUS: 'launcher:status',
   SETTINGS_GET: 'settings:get',
   SETTINGS_SAVE: 'settings:save',
+  LAUNCHER_STATUS_CHANGED: 'launcher:statuschanged',
 } as const
 
 export type IpcChannel = (typeof IPC_CHANNELS)[keyof typeof IPC_CHANNELS]

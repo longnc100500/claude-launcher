@@ -30,6 +30,14 @@ const launcherApi: ClaudeApi['launcher'] = {
 
   status: (profileId: ProfileId) =>
     ipcRenderer.invoke(IPC_CHANNELS.LAUNCHER_STATUS, { id: profileId }),
+
+  onStatusChanged: (callback: (data: { profileId: string; status: string }) => void): (() => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, data: { profileId: string; status: string }): void => {
+      callback(data)
+    }
+    ipcRenderer.on(IPC_CHANNELS.LAUNCHER_STATUS_CHANGED, handler)
+    return () => ipcRenderer.removeListener(IPC_CHANNELS.LAUNCHER_STATUS_CHANGED, handler)
+  },
 }
 
 const settingsApi: ClaudeApi['settings'] = {

@@ -9,6 +9,7 @@ import { LaunchService } from '../services/launchService'
 import { registerProfileHandlers } from './ipc/profileHandlers'
 import { registerSettingsHandlers } from './ipc/settingsHandlers'
 import { registerLaunchHandlers } from './ipc/launchHandlers'
+import { IPC_CHANNELS } from '../shared/ipc/channels'
 import type { ProfileId } from '../domain/profile'
 
 let _mainWindow: BrowserWindow | null = null
@@ -38,6 +39,13 @@ app.whenReady().then(() => {
   registerProfileHandlers(ipcMain, profileService)
   registerSettingsHandlers(ipcMain, settingsRepo)
   registerLaunchHandlers(ipcMain, launchService, settingsRepo)
+
+  // Push process exit notifications to renderer
+  launchService.onProcessExit((profileId) => {
+    for (const win of BrowserWindow.getAllWindows()) {
+      win.webContents.send(IPC_CHANNELS.LAUNCHER_STATUS_CHANGED, { profileId, status: 'stopped' })
+    }
+  })
 
   // Create main window
   _mainWindow = createWindow()

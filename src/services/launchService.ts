@@ -20,6 +20,14 @@ export interface LaunchServiceConfig {
 
 export class LaunchService {
   private readonly processes = new Map<string, ChildProcess>()
+  private exitListeners: Array<(profileId: ProfileId) => void> = []
+
+  onProcessExit(listener: (profileId: ProfileId) => void): () => void {
+    this.exitListeners.push(listener)
+    return () => {
+      this.exitListeners = this.exitListeners.filter((l) => l !== listener)
+    }
+  }
 
   constructor(
     private readonly profileService: ProfileService,
@@ -77,6 +85,9 @@ export class LaunchService {
 
     child.on('exit', () => {
       this.processes.delete(profileId)
+      for (const listener of this.exitListeners) {
+        listener(profileId)
+      }
     })
 
     child.unref()

@@ -19,6 +19,7 @@ function mockLauncherApi(
         start: vi.fn().mockResolvedValue(startResult),
         stop: vi.fn().mockResolvedValue(stopResult),
         status: vi.fn(),
+        onStatusChanged: vi.fn().mockReturnValue(() => {}),
       },
       settings: {},
     },

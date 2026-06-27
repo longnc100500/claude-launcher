@@ -9,6 +9,8 @@ import { CreateProfileDialog } from './components/CreateProfileDialog'
 import { EditProfileDialog } from './components/EditProfileDialog'
 import { DeleteConfirmDialog } from './components/DeleteConfirmDialog'
 import { Button } from './components/ui/button'
+import { toast } from './components/ui/toast'
+import { getUserFriendlyError } from './lib/errorMessages'
 import type { Profile } from '../../domain/profile'
 
 export default function App(): React.JSX.Element {
@@ -25,6 +27,7 @@ export default function App(): React.JSX.Element {
   async function handleCreate(name: string): Promise<void> {
     const profile = await createProfile({ name })
     if (profile) {
+      toast.success(`Profile "${profile.name}" created.`)
       setShowCreateDialog(false)
       resetCreate()
       refresh()
@@ -67,8 +70,18 @@ export default function App(): React.JSX.Element {
           isLoading={isLoading}
           error={error}
           runningProfileIds={runningProfileIds}
-          onLaunch={(p) => void launch(p.id)}
-          onStop={(p) => void stop(p.id)}
+          onLaunch={async (p) => {
+            const ok = await launch(p.id)
+            if (!ok) {
+              toast.error(getUserFriendlyError('BINARY_NOT_FOUND'))
+            }
+          }}
+          onStop={async (p) => {
+            const ok = await stop(p.id)
+            if (!ok) {
+              toast.error('Failed to stop profile.')
+            }
+          }}
           onEdit={setEditingProfile}
           onDelete={setDeletingProfile}
           onCreateNew={() => setShowCreateDialog(true)}
