@@ -21,6 +21,14 @@ export default defineConfig({
         '@domain': resolve('src/domain'),
       },
     },
+    build: {
+      rollupOptions: {
+        output: {
+          format: 'cjs',
+          entryFileNames: '[name].js',
+        },
+      },
+    },
   },
   renderer: {
     resolve: {
