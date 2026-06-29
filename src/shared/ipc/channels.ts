@@ -4,6 +4,8 @@ export const IPC_CHANNELS = {
   PROFILES_CREATE: 'profiles:create',
   PROFILES_UPDATE: 'profiles:update',
   PROFILES_DELETE: 'profiles:delete',
+  PROFILES_DISK_USAGE: 'profiles:disk-usage',
+  PROFILES_CLEANUP: 'profiles:cleanup',
   LAUNCHER_START: 'launcher:start',
   LAUNCHER_STOP: 'launcher:stop',
   LAUNCHER_STATUS: 'launcher:status',

@@ -40,6 +40,14 @@ export const AppSettingsSchema = z.object({
   launchOnStartup: z.boolean(),
 })
 
+export const DiskUsageResultSchema = z.object({
+  bytes: z.number().nonnegative(),
+})
+
+export const CleanupResultSchema = z.object({
+  bytesFreed: z.number().nonnegative(),
+})
+
 export type CreateProfileInputSchemaType = z.infer<typeof CreateProfileInputSchema>
 export type UpdateProfileInputSchemaType = z.infer<typeof UpdateProfileInputSchema>
 export type AppSettingsSchemaType = z.infer<typeof AppSettingsSchema>
