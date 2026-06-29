@@ -12,4 +12,5 @@ export interface IFilesystemService {
   mkdir(path: string, options?: MkdirOptions): Promise<void>
   rm(path: string, options?: RmOptions): Promise<void>
   readdir(path: string): Promise<ReadonlyArray<string>>
+  getDirSize(path: string): Promise<number>
 }

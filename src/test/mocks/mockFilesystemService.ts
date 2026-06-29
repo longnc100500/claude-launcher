@@ -31,6 +31,10 @@ export class MockFilesystemService implements IFilesystemService {
     }
   }
 
+  async getDirSize(_path: string): Promise<number> {
+    return 0
+  }
+
   async readdir(path: string): Promise<ReadonlyArray<string>> {
     const prefix = path.endsWith('/') ? path : path + '/'
     const entries: string[] = []

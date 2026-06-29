@@ -1,4 +1,5 @@
-import { access, mkdir, rm, readdir } from 'fs/promises'
+import { access, mkdir, rm, readdir, stat } from 'fs/promises'
+import { join } from 'path'
 import type { IFilesystemService, MkdirOptions, RmOptions } from '../domain/filesystem'
 
 export class FilesystemService implements IFilesystemService {
@@ -24,5 +25,24 @@ export class FilesystemService implements IFilesystemService {
 
   async readdir(path: string): Promise<ReadonlyArray<string>> {
     return readdir(path)
+  }
+
+  async getDirSize(path: string): Promise<number> {
+    try {
+      const entries = await readdir(path, { withFileTypes: true })
+      let total = 0
+      for (const entry of entries) {
+        const entryPath = join(path, entry.name)
+        if (entry.isDirectory()) {
+          total += await this.getDirSize(entryPath)
+        } else {
+          const s = await stat(entryPath)
+          total += s.size
+        }
+      }
+      return total
+    } catch {
+      return 0
+    }
   }
 }
