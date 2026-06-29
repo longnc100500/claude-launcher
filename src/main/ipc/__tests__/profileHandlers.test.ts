@@ -7,6 +7,8 @@ import { ProfileNotFoundError, ProfileAlreadyExistsError } from '../../../domain
 import { createProfileId } from '../../../domain/profile'
 import type { Profile } from '../../../domain/profile'
 import type { ProfileService } from '../../../services/profileService'
+import type { IFilesystemService } from '../../../domain/filesystem'
+import type { LaunchService } from '../../../services/launchService'
 
 const VALID_UUID = '550e8400-e29b-41d4-a716-446655440000'
 
@@ -33,14 +35,39 @@ function makeMockService(): ProfileService {
   } as unknown as ProfileService
 }
 
+function makeMockFs(): IFilesystemService {
+  return {
+    getDirSize: vi.fn().mockResolvedValue(0),
+    rm: vi.fn().mockResolvedValue(undefined),
+    mkdir: vi.fn().mockResolvedValue(undefined),
+    exists: vi.fn().mockResolvedValue(false),
+    readFile: vi.fn().mockResolvedValue(''),
+    writeFile: vi.fn().mockResolvedValue(undefined),
+  } as unknown as IFilesystemService
+}
+
+function makeMockLaunchService(): LaunchService {
+  return {
+    getStatus: vi.fn().mockReturnValue({ status: 'stopped' }),
+    getAllStatuses: vi.fn().mockReturnValue(new Map()),
+    launch: vi.fn(),
+    stop: vi.fn(),
+    onProcessExit: vi.fn(),
+  } as unknown as LaunchService
+}
+
 describe('registerProfileHandlers', () => {
   let ipcMain: MockIpcMain
   let profileService: ProfileService
+  let fs: IFilesystemService
+  let launchService: LaunchService
 
   beforeEach(() => {
     ipcMain = new MockIpcMain()
     profileService = makeMockService()
-    registerProfileHandlers(ipcMain as never, profileService)
+    fs = makeMockFs()
+    launchService = makeMockLaunchService()
+    registerProfileHandlers(ipcMain as never, profileService, fs, launchService)
   })
 
   describe('profiles:list', () => {

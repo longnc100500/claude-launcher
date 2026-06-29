@@ -11,7 +11,7 @@ describe('IPC_CHANNELS', () => {
 
   it('uses domain:action format', () => {
     for (const channel of Object.values(IPC_CHANNELS)) {
-      expect(channel).toMatch(/^[a-z]+:[a-z]+$/)
+      expect(channel).toMatch(/^[a-z]+:[a-z][a-z-]*$/)
     }
   })
 

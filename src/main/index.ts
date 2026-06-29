@@ -97,7 +97,7 @@ app.whenReady().then(() => {
   }
 
   // Register IPC handlers
-  registerProfileHandlers(ipcMain, profileService)
+  registerProfileHandlers(ipcMain, profileService, fs, launchService)
   registerSettingsHandlers(ipcMain, settingsRepo)
   registerLaunchHandlers(ipcMain, launchService, settingsRepo)
 
