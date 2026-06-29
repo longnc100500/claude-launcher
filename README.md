@@ -60,6 +60,14 @@ Because this app is not yet code-signed, macOS Gatekeeper will block it on first
 xattr -dr com.apple.quarantine /Applications/"Claude Desktop Profiles.app"
 ```
 
+**"damaged and can't be opened" — DMG quarantine issue**
+
+If macOS says the DMG itself is damaged, run this in Terminal **before** opening the DMG:
+```bash
+xattr -dr com.apple.quarantine ~/Downloads/Claude.Desktop.Profiles-*.dmg
+```
+Then double-click the DMG normally.
+
 ---
 
 ## How it works
