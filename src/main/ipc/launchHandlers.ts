@@ -6,6 +6,7 @@ import { Ok, Err } from '../../shared/types/result'
 import type { LaunchService } from '../../services/launchService'
 import type { ISettingsRepository } from '../../domain/settings'
 import { createProfileId } from '../../domain/profile'
+import { rebuildTrayMenu } from '../tray'
 
 export function registerLaunchHandlers(
   ipcMain: IpcMain,
@@ -23,9 +24,13 @@ export function registerLaunchHandlers(
       return Err(new ProfileValidationError('Claude Desktop binary path is not configured'))
     }
 
-    return launchService.launch(createProfileId(parsed.data.profileId), {
+    const result = await launchService.launch(createProfileId(parsed.data.profileId), {
       claudeBinaryPath: settings.claudeBinaryPath,
     })
+
+    if (result.ok) void rebuildTrayMenu()
+
+    return result
   })
 
   ipcMain.handle(IPC_CHANNELS.LAUNCHER_STOP, (_event, rawInput: unknown) => {

@@ -1,7 +1,7 @@
 import { app, ipcMain, BrowserWindow } from 'electron'
 import { spawn } from 'child_process'
 import { createWindow } from './window'
-import { createTray } from './tray'
+import { createTray, rebuildTrayMenu } from './tray'
 import { createAppStore, DEFAULT_SETTINGS } from '../repositories/appStore'
 import { ProfileRepository } from '../repositories/profileRepository'
 import { SettingsRepository } from '../repositories/settingsRepository'
@@ -101,16 +101,17 @@ app.whenReady().then(() => {
   registerSettingsHandlers(ipcMain, settingsRepo)
   registerLaunchHandlers(ipcMain, launchService, settingsRepo)
 
-  // Push process exit notifications to renderer
+  // Push process exit notifications to renderer and rebuild tray
   launchService.onProcessExit((profileId) => {
     for (const win of BrowserWindow.getAllWindows()) {
       win.webContents.send(IPC_CHANNELS.LAUNCHER_STATUS_CHANGED, { profileId, status: 'stopped' })
     }
+    void rebuildTrayMenu()
   })
 
   // Create main window
   _mainWindow = createWindow()
-  createTray(() => _mainWindow)
+  createTray(() => _mainWindow, launchService, profileService)
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
