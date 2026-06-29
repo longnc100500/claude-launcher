@@ -36,3 +36,10 @@ coverage/
 
 # TypeScript
 *.tsbuildinfo
+
+# Local config
+.npmrc
+
+# Internal dev docs (AI planning sessions, local prompts)
+docs/superpowers/
+docs/prompts/
