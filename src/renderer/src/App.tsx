@@ -10,6 +10,7 @@ import { ProfileList } from './components/ProfileList'
 import { CreateProfileDialog } from './components/CreateProfileDialog'
 import { EditProfileDialog } from './components/EditProfileDialog'
 import { DeleteConfirmDialog } from './components/DeleteConfirmDialog'
+import { QuickSwitcher } from './components/QuickSwitcher'
 import { Button } from './components/ui/button'
 import { toast } from './components/ui/toast'
 import { getUserFriendlyError } from './lib/errorMessages'
@@ -26,6 +27,7 @@ export default function App(): React.JSX.Element {
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null)
   const [deletingProfile, setDeletingProfile] = useState<Profile | null>(null)
+  const [showQuickSwitcher, setShowQuickSwitcher] = useState(false)
 
   useKeyboardShortcuts({
     onNewProfile: () => setShowCreateDialog(true),
@@ -34,8 +36,10 @@ export default function App(): React.JSX.Element {
       if (editingProfile) { setEditingProfile(null); resetUpdate() }
       if (deletingProfile) { setDeletingProfile(null) }
       if (showSettings) setShowSettings(false)
+      setShowQuickSwitcher(false)
     },
     onOpenSettings: () => setShowSettings(true),
+    onQuickSwitcher: () => setShowQuickSwitcher(true),
   })
 
   async function handleCreate(name: string, icon: string | null): Promise<void> {
@@ -101,6 +105,7 @@ export default function App(): React.JSX.Element {
           }}
           onEdit={setEditingProfile}
           onDelete={setDeletingProfile}
+          onCleanup={(_p) => { /* TODO: implement cleanup */ }}
           onCreateNew={() => setShowCreateDialog(true)}
         />
         )}
@@ -125,6 +130,17 @@ export default function App(): React.JSX.Element {
         onConfirm={handleDelete}
         onClose={() => setDeletingProfile(null)}
       />
+      {showQuickSwitcher && (
+        <QuickSwitcher
+          profiles={profiles}
+          runningProfileIds={runningProfileIds}
+          onLaunch={async (p) => {
+            const ok = await launch(p.id)
+            if (!ok) toast.error(getUserFriendlyError('BINARY_NOT_FOUND'))
+          }}
+          onClose={() => setShowQuickSwitcher(false)}
+        />
+      )}
     </div>
   )
 }

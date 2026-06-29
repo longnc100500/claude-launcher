@@ -4,6 +4,7 @@ export interface KeyboardShortcutHandlers {
   onNewProfile: () => void
   onCloseDialog: () => void
   onOpenSettings: () => void
+  onQuickSwitcher: () => void
 }
 
 export function useKeyboardShortcuts(handlers: KeyboardShortcutHandlers): void {
@@ -17,6 +18,12 @@ export function useKeyboardShortcuts(handlers: KeyboardShortcutHandlers): void {
       if (isMod && event.key === 'n') {
         event.preventDefault()
         handlersRef.current.onNewProfile()
+        return
+      }
+
+      if (isMod && event.key === 'k') {
+        event.preventDefault()
+        handlersRef.current.onQuickSwitcher()
         return
       }
 
