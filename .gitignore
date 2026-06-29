@@ -43,3 +43,4 @@ coverage/
 # Internal dev docs (AI planning sessions, local prompts, architecture notes)
 docs/
 CLAUDE.md
+.worktrees/
