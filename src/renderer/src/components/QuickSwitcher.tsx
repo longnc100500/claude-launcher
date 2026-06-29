@@ -3,7 +3,7 @@ import type { Profile } from '../../../domain/profile'
 
 export interface QuickSwitcherProps {
   profiles: ReadonlyArray<Profile>
-  runningProfileIds: ReadonlyArray<string>
+  runningProfileIds: ReadonlySet<string>
   onLaunch: (profile: Profile) => void
   onClose: () => void
 }
@@ -75,7 +75,7 @@ export function QuickSwitcher({
             <p className="px-4 py-3 text-sm text-gray-600">No profiles found</p>
           )}
           {filtered.map((profile, index) => {
-            const isRunning = runningProfileIds.includes(profile.id)
+            const isRunning = runningProfileIds.has(profile.id)
             return (
               <div
                 key={profile.id}

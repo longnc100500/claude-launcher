@@ -10,6 +10,7 @@ import { ProfileList } from './components/ProfileList'
 import { CreateProfileDialog } from './components/CreateProfileDialog'
 import { EditProfileDialog } from './components/EditProfileDialog'
 import { DeleteConfirmDialog } from './components/DeleteConfirmDialog'
+import { CleanupConfirmDialog } from './components/CleanupConfirmDialog'
 import { QuickSwitcher } from './components/QuickSwitcher'
 import { Button } from './components/ui/button'
 import { toast } from './components/ui/toast'
@@ -27,6 +28,7 @@ export default function App(): React.JSX.Element {
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null)
   const [deletingProfile, setDeletingProfile] = useState<Profile | null>(null)
+  const [cleaningProfile, setCleaningProfile] = useState<Profile | null>(null)
   const [showQuickSwitcher, setShowQuickSwitcher] = useState(false)
 
   useKeyboardShortcuts({
@@ -105,7 +107,7 @@ export default function App(): React.JSX.Element {
           }}
           onEdit={setEditingProfile}
           onDelete={setDeletingProfile}
-          onCleanup={() => { /* TODO: implement cleanup */ }}
+          onCleanup={setCleaningProfile}
           onCreateNew={() => setShowCreateDialog(true)}
         />
         )}
@@ -129,6 +131,11 @@ export default function App(): React.JSX.Element {
         isLoading={isDeleting}
         onConfirm={handleDelete}
         onClose={() => setDeletingProfile(null)}
+      />
+      <CleanupConfirmDialog
+        profile={cleaningProfile}
+        onClose={() => setCleaningProfile(null)}
+        onCleaned={() => setCleaningProfile(null)}
       />
       {showQuickSwitcher && (
         <QuickSwitcher
