@@ -55,6 +55,12 @@ Claude Desktop naturally reads and writes all its data under `HOME`, so each pro
 
 On **Windows**, the launcher sets `USERPROFILE` and `APPDATA` instead of `HOME`.
 
+### ⚠️ Windows login — use email + verification code
+
+When signing in to a profile on Windows, **do not use "Continue with browser"**. The browser redirect opens Claude's auth flow in your default browser and completes the login in the system-level Claude session — not in the isolated profile you launched.
+
+Instead, choose **"Sign in with email"** and use the verification code method. This keeps the entire auth flow inside the isolated profile window and ensures the session is correctly tied to that profile.
+
 ---
 
 ## Build from source
