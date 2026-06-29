@@ -1,3 +1,4 @@
+import { spawnSync } from 'child_process'
 import type { IpcMain } from 'electron'
 import { IPC_CHANNELS } from '../../shared/ipc/channels'
 import { LaunchInputSchema, ProfileIdParamsSchema } from '../../shared/ipc/schemas'
@@ -48,5 +49,23 @@ export function registerLaunchHandlers(
     }
     const status = launchService.getStatus(createProfileId(parsed.data.id))
     return Ok(status)
+  })
+
+  ipcMain.handle(IPC_CHANNELS.LAUNCHER_FOCUS, (_event, rawInput: unknown) => {
+    const parsed = ProfileIdParamsSchema.safeParse(rawInput)
+    if (!parsed.success) {
+      return Err(new ProfileValidationError(parsed.error.message))
+    }
+    const status = launchService.getStatus(createProfileId(parsed.data.id))
+    if (status.status !== 'running') {
+      return Err(new ProfileValidationError('Profile is not running'))
+    }
+    if (process.platform === 'darwin') {
+      spawnSync('osascript', [
+        '-e',
+        `tell application "System Events" to set frontmost of (first process whose unix id is ${status.pid}) to true`,
+      ])
+    }
+    return Ok(undefined)
   })
 }

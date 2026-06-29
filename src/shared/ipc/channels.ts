@@ -9,6 +9,7 @@ export const IPC_CHANNELS = {
   LAUNCHER_START: 'launcher:start',
   LAUNCHER_STOP: 'launcher:stop',
   LAUNCHER_STATUS: 'launcher:status',
+  LAUNCHER_FOCUS: 'launcher:focus',
   SETTINGS_GET: 'settings:get',
   SETTINGS_SAVE: 'settings:save',
   LAUNCHER_STATUS_CHANGED: 'launcher:statuschanged',

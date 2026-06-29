@@ -142,8 +142,12 @@ export default function App(): React.JSX.Element {
           profiles={profiles}
           runningProfileIds={runningProfileIds}
           onLaunch={async (p) => {
-            const ok = await launch(p.id)
-            if (!ok) toast.error(getUserFriendlyError('BINARY_NOT_FOUND'))
+            if (runningProfileIds.has(p.id)) {
+              await window.claudeApi.launcher.focus(p.id)
+            } else {
+              const ok = await launch(p.id)
+              if (!ok) toast.error(getUserFriendlyError('BINARY_NOT_FOUND'))
+            }
           }}
           onClose={() => setShowQuickSwitcher(false)}
         />
