@@ -35,38 +35,29 @@ Go to [Releases](../../releases) and download the installer for your platform:
 
 | Platform | File |
 |----------|------|
-| macOS | `Claude.Desktop.Profiles-x.x.x.dmg` |
+| macOS | `Claude.Desktop.Profiles-x.x.x-arm64-mac.zip` (Apple Silicon) or `Claude.Desktop.Profiles-x.x.x-mac.zip` (Intel) |
 | Windows | `Claude.Desktop.Profiles.Setup.x.x.x.exe` |
 | Linux | `Claude.Desktop.Profiles-x.x.x.AppImage` |
 
 ### ⚠️ macOS — app is not signed
 
-Because this app is not yet code-signed, macOS Gatekeeper will block it on first launch. To open it:
+Because this app is not yet code-signed, macOS Gatekeeper will block it on first launch.
 
-**Option 1 — Right-click method (recommended)**
-1. Open **Finder** and locate `Claude Desktop Profiles.app` in `/Applications`
-2. **Right-click** (or Control-click) the app → **Open**
-3. Click **Open** in the dialog that appears
-4. The app will open and macOS will remember your choice for future launches
+**Install steps:**
+1. Download and unzip the `.zip` file
+2. Drag `Claude Desktop Profiles.app` to `/Applications`
+3. **Right-click** (or Control-click) the app → **Open**
+4. Click **Open** in the dialog — macOS will remember your choice for future launches
 
-**Option 2 — System Settings**
+**Option — System Settings**
 1. Try to open the app normally — macOS will block it
 2. Open **System Settings → Privacy & Security**
-3. Scroll down to the security section — you'll see a message about Claude Desktop Profiles being blocked
-4. Click **Open Anyway**
+3. Scroll down and click **Open Anyway**
 
-**Option 3 — Terminal (one-time command)**
+**Option — Terminal (one-time command)**
 ```bash
 xattr -dr com.apple.quarantine /Applications/"Claude Desktop Profiles.app"
 ```
-
-**"damaged and can't be opened" — DMG quarantine issue**
-
-If macOS says the DMG itself is damaged, run this in Terminal **before** opening the DMG:
-```bash
-xattr -dr com.apple.quarantine ~/Downloads/Claude.Desktop.Profiles-*.dmg
-```
-Then double-click the DMG normally.
 
 ---
 
