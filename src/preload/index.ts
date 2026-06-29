@@ -19,6 +19,12 @@ const profilesApi: ClaudeApi['profiles'] = {
 
   delete: (id: ProfileId) =>
     ipcRenderer.invoke(IPC_CHANNELS.PROFILES_DELETE, { id }),
+
+  diskUsage: (id: ProfileId) =>
+    ipcRenderer.invoke(IPC_CHANNELS.PROFILES_DISK_USAGE, { id }),
+
+  cleanup: (id: ProfileId) =>
+    ipcRenderer.invoke(IPC_CHANNELS.PROFILES_CLEANUP, { id }),
 }
 
 const launcherApi: ClaudeApi['launcher'] = {

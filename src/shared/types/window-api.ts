@@ -9,6 +9,8 @@ export type ProfilesApi = {
   create: (input: CreateProfileInput) => Promise<Result<Profile>>
   update: (id: ProfileId, updates: UpdateProfileInput) => Promise<Result<Profile>>
   delete: (id: ProfileId) => Promise<Result<void>>
+  diskUsage: (id: ProfileId) => Promise<Result<{ bytes: number }>>
+  cleanup: (id: ProfileId) => Promise<Result<{ bytesFreed: number }>>
 }
 
 export type LauncherApi = {
