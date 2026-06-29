@@ -20,12 +20,26 @@ export function registerLaunchHandlers(
       return Err(new ProfileValidationError(parsed.error.message))
     }
 
+    const profileId = createProfileId(parsed.data.profileId)
+
+    // If already running, focus instead of launching
+    const currentStatus = launchService.getStatus(profileId)
+    if (currentStatus.status === 'running') {
+      if (process.platform === 'darwin') {
+        spawnSync('osascript', [
+          '-e',
+          `tell application "System Events" to set frontmost of (first process whose unix id is ${currentStatus.pid}) to true`,
+        ])
+      }
+      return Ok({ profileId, pid: currentStatus.pid, startedAt: new Date() })
+    }
+
     const settings = await settingsRepo.get()
     if (!settings.claudeBinaryPath) {
       return Err(new ProfileValidationError('Claude Desktop binary path is not configured'))
     }
 
-    const result = await launchService.launch(createProfileId(parsed.data.profileId), {
+    const result = await launchService.launch(profileId, {
       claudeBinaryPath: settings.claudeBinaryPath,
     })
 
