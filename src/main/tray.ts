@@ -14,11 +14,11 @@ export function createTray(getMainWindow: () => BrowserWindow | null): void {
     return
   }
 
-  tray.setToolTip('Claude Launcher')
+  tray.setToolTip('Claude Desktop Profiles')
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Open Claude Launcher',
+      label: 'Open Claude Desktop Profiles',
       click: () => {
         const win = getMainWindow()
         if (win) {

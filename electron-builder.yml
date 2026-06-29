@@ -1,6 +1,6 @@
-appId: com.claudelauncher.app
-productName: Claude Launcher
-copyright: Copyright © 2026 Claude Launcher Contributors
+appId: com.claudedesktopprofiles.app
+productName: Claude Desktop Profiles
+copyright: Copyright © 2026 Claude Desktop Profiles Contributors
 
 directories:
   output: dist
@@ -63,4 +63,4 @@ nsis:
 publish:
   provider: github
   owner: longnc100500
-  repo: claude-launcher
+  repo: claude-desktop-profiles

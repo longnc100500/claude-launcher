@@ -1,6 +1,6 @@
 {
-  "name": "claude-launcher",
-  "version": "0.0.1",
+  "name": "claude-desktop-profiles",
+  "version": "0.0.2",
   "description": "Run multiple isolated Claude Desktop profiles",
   "main": "out/main/index.js",
   "scripts": {

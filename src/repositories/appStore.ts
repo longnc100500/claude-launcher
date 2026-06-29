@@ -33,7 +33,7 @@ export type AppStore = Store<AppStoreSchema>
 
 export function createAppStore(): AppStore {
   return new Store<AppStoreSchema>({
-    name: 'claude-launcher',
+    name: 'claude-desktop-profiles',
     defaults: {
       profiles: {},
       settings: DEFAULT_SETTINGS,

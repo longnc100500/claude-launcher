@@ -12,7 +12,7 @@ export function createWindow(): BrowserWindow {
     minWidth: 720,
     minHeight: 480,
     show: false,
-    title: 'Claude Launcher',
+    title: 'Claude Desktop Profiles',
     ...(icon.isEmpty() ? {} : { icon }),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
