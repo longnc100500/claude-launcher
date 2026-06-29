@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "ELECTRON_EXEC_PATH=$(node -e \"console.log(require('electron'))\") electron-vite dev",
     "build": "electron-vite build && electron-builder",
-    "build:mac": "electron-vite build && electron-builder --mac",
-    "build:linux": "electron-vite build && electron-builder --linux",
-    "build:win": "electron-vite build && electron-builder --win",
+    "build:mac": "electron-vite build && electron-builder --mac --publish never",
+    "build:linux": "electron-vite build && electron-builder --linux --publish never",
+    "build:win": "electron-vite build && electron-builder --win --publish never",
     "build:dir": "electron-vite build && electron-builder --dir",
     "preview": "electron-vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",

@@ -38,38 +38,6 @@ jobs:
           path: dist/*.{dmg,zip}
           if-no-files-found: ignore
 
-  build-linux:
-    name: Build Linux
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build
-        run: pnpm build:linux
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux-build
-          path: dist/*.{AppImage,deb}
-          if-no-files-found: ignore
-
   build-windows:
     name: Build Windows
     runs-on: windows-latest
@@ -104,7 +72,7 @@ jobs:
 
   create-release:
     name: Create GitHub Release
-    needs: [build-mac, build-linux, build-windows]
+    needs: [build-mac, build-windows]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -120,7 +88,6 @@ jobs:
           generate_release_notes: true
           files: |
             mac-build/*
-            linux-build/*
             windows-build/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
