@@ -66,11 +66,7 @@ export class LaunchService {
       child = spawn(
         config.claudeBinaryPath,
         [`--user-data-dir=${userDataDir}`],
-        {
-          env: process.env,
-          detached: true,
-          stdio: 'ignore',
-        },
+        { env: process.env, detached: true, stdio: 'ignore' },
       )
     } catch (err) {
       return Err(

@@ -15,7 +15,6 @@ export class MockStore implements MockableStore {
     settings: {
       claudeBinaryPath: null,
       dataDir: '',
-      theme: 'system',
       launchOnStartup: false,
     },
   }
@@ -47,7 +46,6 @@ export class MockStore implements MockableStore {
       settings: {
         claudeBinaryPath: null,
         dataDir: '',
-        theme: 'system',
         launchOnStartup: false,
       },
     }

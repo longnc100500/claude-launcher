@@ -25,11 +25,11 @@ export function DeleteConfirmDialog({
       className="fixed inset-0 z-50 flex items-center justify-center"
     >
       <div className="absolute inset-0 bg-black/50" onClick={onClose} aria-hidden="true" />
-      <div className="relative bg-white rounded-lg shadow-xl p-6 w-full max-w-sm mx-4">
-        <h2 id="delete-profile-title" className="text-lg font-semibold mb-2">
+      <div className="relative rounded-lg shadow-xl p-6 w-full max-w-sm mx-4" style={{ backgroundColor: '#181818', border: '1px solid #2a2a2a' }}>
+        <h2 id="delete-profile-title" className="text-lg font-semibold mb-2 text-white">
           Delete Profile
         </h2>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-400 mb-6">
           Are you sure you want to delete <strong>{profile.name}</strong>? This will also delete its home directory and all data inside it.
         </p>
         <div className="flex gap-2 justify-end">

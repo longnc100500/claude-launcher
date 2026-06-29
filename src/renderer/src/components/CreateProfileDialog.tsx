@@ -60,13 +60,13 @@ export function CreateProfileDialog({
         onClick={handleClose}
         aria-hidden="true"
       />
-      <div className="relative bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
-        <h2 id="create-profile-title" className="text-lg font-semibold mb-4">
+      <div className="relative rounded-lg shadow-xl p-6 w-full max-w-md mx-4" style={{ backgroundColor: '#181818', border: '1px solid #2a2a2a' }}>
+        <h2 id="create-profile-title" className="text-lg font-semibold mb-4 text-white">
           Create Profile
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="profile-name" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="profile-name" className="block text-sm font-medium text-gray-300 mb-1">
               Profile name
             </label>
             <Input

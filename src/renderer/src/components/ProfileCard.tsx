@@ -33,7 +33,7 @@ export function ProfileCard({
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-xs text-gray-400 truncate mb-3">{profile.homeDir}</p>
+        <p className="text-xs text-gray-500 truncate mb-3">{profile.homeDir}</p>
         <div className="flex gap-2">
           {isRunning ? (
             <Button
@@ -57,7 +57,7 @@ export function ProfileCard({
           <Button
             variant="ghost"
             size="sm"
-            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+            className="text-red-400 hover:text-red-300 hover:bg-red-950"
             onClick={() => onDelete(profile)}
           >
             Delete

@@ -8,7 +8,6 @@ import type { AppSettings } from '../../../domain/settings'
 const DEFAULT_SETTINGS: AppSettings = {
   claudeBinaryPath: null,
   dataDir: '/Users/test/.claude-launcher',
-  theme: 'system',
   launchOnStartup: false,
 }
 
@@ -50,23 +49,11 @@ describe('registerSettingsHandlers', () => {
       const newSettings: AppSettings = {
         claudeBinaryPath: '/Applications/Claude.app',
         dataDir: '/Users/test/.claude-launcher',
-        theme: 'dark',
         launchOnStartup: true,
       }
       const result = await ipcMain.invoke(IPC_CHANNELS.SETTINGS_SAVE, newSettings)
       expect((result as { ok: boolean }).ok).toBe(true)
       expect(settingsRepo.save).toHaveBeenCalledWith(newSettings)
-    })
-
-    it('returns validation error for invalid theme', async () => {
-      const result = await ipcMain.invoke(IPC_CHANNELS.SETTINGS_SAVE, {
-        claudeBinaryPath: null,
-        dataDir: '/tmp',
-        theme: 'invalid',
-        launchOnStartup: false,
-      })
-      expect((result as { ok: boolean }).ok).toBe(false)
-      expect(settingsRepo.save).not.toHaveBeenCalled()
     })
 
     it('returns validation error for missing required fields', async () => {

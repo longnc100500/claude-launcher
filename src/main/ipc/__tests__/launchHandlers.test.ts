@@ -13,14 +13,12 @@ const VALID_PROFILE_ID = createProfileId(VALID_UUID)
 const SETTINGS_WITH_BINARY: AppSettings = {
   claudeBinaryPath: '/Applications/Claude.app/Contents/MacOS/Claude',
   dataDir: '/Users/test/.claude-launcher',
-  theme: 'system',
   launchOnStartup: false,
 }
 
 const SETTINGS_WITHOUT_BINARY: AppSettings = {
   claudeBinaryPath: null,
   dataDir: '/Users/test/.claude-launcher',
-  theme: 'system',
   launchOnStartup: false,
 }
 

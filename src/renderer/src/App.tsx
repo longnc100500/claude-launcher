@@ -68,10 +68,10 @@ export default function App(): React.JSX.Element {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="border-b border-gray-200 bg-white px-6 py-4">
+    <div className="min-h-screen" style={{ backgroundColor: '#111111' }}>
+      <header className="px-6 py-4" style={{ borderBottom: '1px solid #2a2a2a', backgroundColor: '#0D0D0D' }}>
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-gray-900">Claude Launcher</h1>
+          <h1 className="text-xl font-semibold text-white">Claude Launcher</h1>
           <div className="flex gap-2">
             <Button onClick={() => setShowCreateDialog(true)}>New Profile</Button>
             <Button variant="outline" size="sm" onClick={() => setShowSettings(true)}>Settings</Button>

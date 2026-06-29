@@ -16,7 +16,6 @@ const KNOWN_PATHS: Readonly<Record<string, ReadonlyArray<string>>> = {
     '/opt/claude/claude',
   ],
   win32: [
-    'C:\\Users\\Public\\AppData\\Local\\AnthropicClaude\\claude.exe',
     `${process.env['LOCALAPPDATA'] ?? ''}\\AnthropicClaude\\claude.exe`,
     `${process.env['APPDATA'] ?? ''}\\AnthropicClaude\\claude.exe`,
   ],

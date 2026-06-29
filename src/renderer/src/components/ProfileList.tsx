@@ -18,7 +18,7 @@ export interface ProfileListProps {
 function EmptyState({ onCreateNew }: { onCreateNew: () => void }): React.JSX.Element {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <p className="text-gray-500 mb-4">No profiles yet. Create one to get started.</p>
+      <p className="text-gray-400 mb-4">No profiles yet. Create one to get started.</p>
       <Button onClick={onCreateNew}>Create Profile</Button>
     </div>
   )
@@ -30,7 +30,8 @@ function LoadingSkeleton(): React.JSX.Element {
       {[1, 2, 3].map((i) => (
         <div
           key={i}
-          className="h-32 rounded-lg border border-gray-200 bg-gray-100 animate-pulse"
+          className="h-32 rounded-lg animate-pulse"
+          style={{ border: '1px solid #2a2a2a', backgroundColor: '#181818' }}
         />
       ))}
     </div>
@@ -52,7 +53,7 @@ export function ProfileList({
 
   if (error !== null) {
     return (
-      <div className="rounded-md bg-red-50 border border-red-200 p-4 text-red-800">
+      <div className="rounded-md border border-red-900 bg-red-950 p-4 text-red-300">
         <p className="font-medium">Failed to load profiles</p>
         <p className="text-sm">{error}</p>
       </div>

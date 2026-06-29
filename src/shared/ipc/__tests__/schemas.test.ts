@@ -109,7 +109,6 @@ describe('AppSettingsSchema', () => {
     const result = AppSettingsSchema.safeParse({
       claudeBinaryPath: '/Applications/Claude.app/Contents/MacOS/Claude',
       dataDir: '/Users/test/.claude-launcher',
-      theme: 'system',
       launchOnStartup: false,
     })
     expect(result.success).toBe(true)
@@ -119,27 +118,15 @@ describe('AppSettingsSchema', () => {
     const result = AppSettingsSchema.safeParse({
       claudeBinaryPath: null,
       dataDir: '/Users/test/.claude-launcher',
-      theme: 'dark',
       launchOnStartup: true,
     })
     expect(result.success).toBe(true)
-  })
-
-  it('rejects an invalid theme', () => {
-    const result = AppSettingsSchema.safeParse({
-      claudeBinaryPath: null,
-      dataDir: '/Users/test/.claude-launcher',
-      theme: 'purple',
-      launchOnStartup: false,
-    })
-    expect(result.success).toBe(false)
   })
 
   it('rejects an empty dataDir', () => {
     const result = AppSettingsSchema.safeParse({
       claudeBinaryPath: null,
       dataDir: '',
-      theme: 'light',
       launchOnStartup: false,
     })
     expect(result.success).toBe(false)

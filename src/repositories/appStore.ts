@@ -15,14 +15,12 @@ export interface StoredProfile {
 export interface AppSettingsStored {
   claudeBinaryPath: string | null
   dataDir: string
-  theme: 'system' | 'light' | 'dark'
   launchOnStartup: boolean
 }
 
 export const DEFAULT_SETTINGS: AppSettingsStored = {
   claudeBinaryPath: null,
   dataDir: '',
-  theme: 'system',
   launchOnStartup: false,
 }
 

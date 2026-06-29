@@ -37,7 +37,6 @@ export const LaunchInputSchema = z.object({
 export const AppSettingsSchema = z.object({
   claudeBinaryPath: z.string().nullable(),
   dataDir: z.string().min(1, 'Data directory cannot be empty'),
-  theme: z.enum(['system', 'light', 'dark']),
   launchOnStartup: z.boolean(),
 })
 

@@ -10,7 +10,6 @@ export class SettingsRepository implements ISettingsRepository {
     return {
       claudeBinaryPath: stored.claudeBinaryPath,
       dataDir: stored.dataDir,
-      theme: stored.theme,
       launchOnStartup: stored.launchOnStartup,
     }
   }
@@ -19,7 +18,6 @@ export class SettingsRepository implements ISettingsRepository {
     this.store.set('settings', {
       claudeBinaryPath: settings.claudeBinaryPath,
       dataDir: settings.dataDir,
-      theme: settings.theme,
       launchOnStartup: settings.launchOnStartup,
     })
   }

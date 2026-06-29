@@ -15,7 +15,6 @@ describe('SettingsRepository', () => {
     it('returns default settings when store is empty', async () => {
       const settings = await repo.get()
       expect(settings.claudeBinaryPath).toBeNull()
-      expect(settings.theme).toBe('system')
       expect(settings.launchOnStartup).toBe(false)
     })
   })
@@ -25,12 +24,10 @@ describe('SettingsRepository', () => {
       await repo.save({
         claudeBinaryPath: '/Applications/Claude.app',
         dataDir: '/Users/test/.claude-launcher',
-        theme: 'dark',
         launchOnStartup: true,
       })
       const result = await repo.get()
       expect(result.claudeBinaryPath).toBe('/Applications/Claude.app')
-      expect(result.theme).toBe('dark')
       expect(result.launchOnStartup).toBe(true)
     })
 
@@ -38,7 +35,6 @@ describe('SettingsRepository', () => {
       await repo.save({
         claudeBinaryPath: null,
         dataDir: '/Users/test/.claude-launcher',
-        theme: 'light',
         launchOnStartup: false,
       })
       const result = await repo.get()
