@@ -62,5 +62,5 @@ nsis:
 
 publish:
   provider: github
-  owner: YOUR_GITHUB_USERNAME
+  owner: longnc100500
   repo: claude-launcher
