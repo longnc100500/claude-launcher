@@ -67,7 +67,7 @@ describe('LaunchService', () => {
       }
     })
 
-    it('spawns process with isolated HOME environment', async () => {
+    it('spawns process with isolated user-data-dir', async () => {
       fs.addFile(BINARY_PATH)
       const profile = makeProfile()
       fs.addDirectory(profile.homeDir)
@@ -78,9 +78,8 @@ describe('LaunchService', () => {
 
       expect(spawn).toHaveBeenCalledWith(
         BINARY_PATH,
-        [],
+        [`--user-data-dir=${profile.homeDir}/user-data`],
         expect.objectContaining({
-          env: expect.objectContaining({ HOME: profile.homeDir }),
           detached: true,
         }),
       )

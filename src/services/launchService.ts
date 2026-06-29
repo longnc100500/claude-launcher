@@ -56,17 +56,22 @@ export class LaunchService {
     }
     const profile = profileResult.value
 
-    // Spawn Claude Desktop with isolated HOME
+    // Spawn Claude Desktop with isolated user data dir.
+    // On macOS, NSHomeDirectory() ignores the HOME env var, so Electron apps
+    // store data in ~/Library/Application Support/ regardless of HOME.
+    // Passing --user-data-dir forces Chromium to use a profile-specific path.
+    const userDataDir = `${profile.homeDir}/user-data`
     let child: ChildProcess
     try {
-      child = spawn(config.claudeBinaryPath, [], {
-        env: {
-          ...process.env,
-          HOME: profile.homeDir,
+      child = spawn(
+        config.claudeBinaryPath,
+        [`--user-data-dir=${userDataDir}`],
+        {
+          env: process.env,
+          detached: true,
+          stdio: 'ignore',
         },
-        detached: true,
-        stdio: 'ignore',
-      })
+      )
     } catch (err) {
       return Err(
         new ProcessStartFailedError(
