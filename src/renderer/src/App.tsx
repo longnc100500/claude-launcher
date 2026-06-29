@@ -105,7 +105,7 @@ export default function App(): React.JSX.Element {
           }}
           onEdit={setEditingProfile}
           onDelete={setDeletingProfile}
-          onCleanup={(_p) => { /* TODO: implement cleanup */ }}
+          onCleanup={() => { /* TODO: implement cleanup */ }}
           onCreateNew={() => setShowCreateDialog(true)}
         />
         )}

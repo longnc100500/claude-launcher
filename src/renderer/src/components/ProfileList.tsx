@@ -12,6 +12,7 @@ export interface ProfileListProps {
   onStop: (profile: Profile) => void
   onEdit: (profile: Profile) => void
   onDelete: (profile: Profile) => void
+  onCleanup: (profile: Profile) => void
   onCreateNew: () => void
 }
 
@@ -47,6 +48,7 @@ export function ProfileList({
   onStop,
   onEdit,
   onDelete,
+  onCleanup,
   onCreateNew,
 }: ProfileListProps): React.JSX.Element {
   if (isLoading) return <LoadingSkeleton />
@@ -79,6 +81,7 @@ export function ProfileList({
             onStop={onStop}
             onEdit={onEdit}
             onDelete={onDelete}
+            onCleanup={onCleanup}
           />
         </div>
       ))}

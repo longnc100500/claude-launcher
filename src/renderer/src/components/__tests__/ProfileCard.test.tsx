@@ -1,10 +1,21 @@
 import React from 'react'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import * as matchers from '@testing-library/jest-dom/matchers'
 expect.extend(matchers)
 import { render, screen, cleanup } from '@testing-library/react'
-import { afterEach } from 'vitest'
 afterEach(() => cleanup())
+
+beforeEach(() => {
+  Object.defineProperty(window, 'claudeApi', {
+    value: {
+      profiles: {
+        diskUsage: vi.fn().mockResolvedValue({ ok: false, error: new Error('not implemented') }),
+      },
+    },
+    writable: true,
+    configurable: true,
+  })
+})
 import userEvent from '@testing-library/user-event'
 import { ProfileCard } from '../ProfileCard'
 import { createProfileId } from '../../../../domain/profile'
@@ -34,6 +45,7 @@ describe('ProfileCard', () => {
         onStop={noop}
         onEdit={noop}
         onDelete={noop}
+        onCleanup={noop}
       />,
     )
     expect(screen.getByText('Work')).toBeInTheDocument()
@@ -47,6 +59,7 @@ describe('ProfileCard', () => {
         onStop={noop}
         onEdit={noop}
         onDelete={noop}
+        onCleanup={noop}
       />,
     )
     expect(screen.getByText('/profiles/work')).toBeInTheDocument()
@@ -61,6 +74,7 @@ describe('ProfileCard', () => {
         onStop={noop}
         onEdit={noop}
         onDelete={noop}
+        onCleanup={noop}
       />,
     )
     expect(screen.getByRole('button', { name: 'Launch' })).toBeInTheDocument()
@@ -75,6 +89,7 @@ describe('ProfileCard', () => {
         onStop={noop}
         onEdit={noop}
         onDelete={noop}
+        onCleanup={noop}
       />,
     )
     expect(screen.getByRole('button', { name: 'Stop' })).toBeInTheDocument()
@@ -91,6 +106,7 @@ describe('ProfileCard', () => {
         onStop={noop}
         onEdit={noop}
         onDelete={noop}
+        onCleanup={noop}
       />,
     )
     await userEvent.click(screen.getByRole('button', { name: 'Launch' }))
@@ -107,10 +123,28 @@ describe('ProfileCard', () => {
         onStop={noop}
         onEdit={noop}
         onDelete={onDelete}
+        onCleanup={noop}
       />,
     )
     await userEvent.click(screen.getByRole('button', { name: 'Delete' }))
     expect(onDelete).toHaveBeenCalledWith(profile)
+  })
+
+  it('calls onCleanup when Clean is clicked', async () => {
+    const onCleanup = vi.fn()
+    const profile = makeProfile()
+    render(
+      <ProfileCard
+        profile={profile}
+        onLaunch={noop}
+        onStop={noop}
+        onEdit={noop}
+        onDelete={noop}
+        onCleanup={onCleanup}
+      />,
+    )
+    await userEvent.click(screen.getByRole('button', { name: /Clean/i }))
+    expect(onCleanup).toHaveBeenCalledWith(profile)
   })
 
   it('renders profile icon when present', () => {
@@ -121,6 +155,7 @@ describe('ProfileCard', () => {
         onStop={noop}
         onEdit={noop}
         onDelete={noop}
+        onCleanup={noop}
       />,
     )
     expect(screen.getByText('💼')).toBeInTheDocument()
