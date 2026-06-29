@@ -1,4 +1,4 @@
-# Claude Launcher
+# Claude Desktop Profiles
 
 > Run multiple isolated Claude Desktop profiles — each with its own sessions, MCP servers, and preferences.
 
@@ -12,9 +12,9 @@
 
 Claude Desktop stores everything — sessions, cookies, MCP server configs, preferences — in a single user directory. That means one account, one session, one workspace.
 
-**Claude Launcher** lets you create multiple profiles, each completely isolated from the others. Switch between a personal account and a work account, or run separate MCP environments per project — no conflicts, no cross-contamination.
+**Claude Desktop Profiles** lets you create multiple profiles, each completely isolated from the others. Switch between a personal account and a work account, or run separate MCP environments per project — no conflicts, no cross-contamination.
 
-Each profile gets its own home directory. Claude Launcher starts Claude Desktop with that directory as its home, so isolation is total and update-safe. The Claude Desktop binary is never modified.
+Each profile gets its own home directory. Claude Desktop Profiles starts Claude Desktop with that directory as its home, so isolation is total and update-safe. The Claude Desktop binary is never modified.
 
 ---
 
@@ -35,15 +35,36 @@ Go to [Releases](../../releases) and download the installer for your platform:
 
 | Platform | File |
 |----------|------|
-| macOS | `Claude.Launcher-x.x.x.dmg` |
-| Windows | `Claude.Launcher.Setup.x.x.x.exe` |
-| Linux | `Claude.Launcher-x.x.x.AppImage` |
+| macOS | `Claude.Desktop.Profiles-x.x.x.dmg` |
+| Windows | `Claude.Desktop.Profiles.Setup.x.x.x.exe` |
+| Linux | `Claude.Desktop.Profiles-x.x.x.AppImage` |
+
+### ⚠️ macOS — app is not signed
+
+Because this app is not yet code-signed, macOS Gatekeeper will block it on first launch. To open it:
+
+**Option 1 — Right-click method (recommended)**
+1. Open **Finder** and locate `Claude Desktop Profiles.app` in `/Applications`
+2. **Right-click** (or Control-click) the app → **Open**
+3. Click **Open** in the dialog that appears
+4. The app will open and macOS will remember your choice for future launches
+
+**Option 2 — System Settings**
+1. Try to open the app normally — macOS will block it
+2. Open **System Settings → Privacy & Security**
+3. Scroll down to the security section — you'll see a message about Claude Desktop Profiles being blocked
+4. Click **Open Anyway**
+
+**Option 3 — Terminal (one-time command)**
+```bash
+xattr -dr com.apple.quarantine /Applications/"Claude Desktop Profiles.app"
+```
 
 ---
 
 ## How it works
 
-Claude Launcher spawns Claude Desktop with the `HOME` environment variable overridden to a profile-specific directory:
+Claude Desktop Profiles spawns Claude Desktop with the `HOME` environment variable overridden to a profile-specific directory:
 
 ```
 spawn(claudeBinaryPath, [], {
@@ -68,8 +89,8 @@ Instead, choose **"Sign in with email"** and use the verification code method. T
 **Prerequisites:** Node.js 20+, pnpm 9+
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude-launcher.git
-cd claude-launcher
+git clone https://github.com/longnc100500/claude-desktop-profiles.git
+cd claude-desktop-profiles
 pnpm install
 
 # Development
@@ -90,7 +111,7 @@ pnpm build:linux   # Linux (.AppImage, .deb)
 
 ## Finding the Claude Desktop binary
 
-Claude Launcher auto-detects the binary on most systems. If it fails, set the path manually in **Settings**.
+Claude Desktop Profiles auto-detects the binary on most systems. If it fails, set the path manually in **Settings**.
 
 | Platform | Default location |
 |----------|-----------------|
