@@ -46,18 +46,11 @@ Because this app is not yet code-signed, macOS Gatekeeper will block it on first
 **Install steps:**
 1. Download and unzip the `.zip` file
 2. Drag `Claude Desktop Profiles.app` to `/Applications`
-3. **Right-click** (or Control-click) the app → **Open**
-4. Click **Open** in the dialog — macOS will remember your choice for future launches
-
-**Option — System Settings**
-1. Try to open the app normally — macOS will block it
-2. Open **System Settings → Privacy & Security**
-3. Scroll down and click **Open Anyway**
-
-**Option — Terminal (one-time command)**
+3. Open **Terminal** and run:
 ```bash
 xattr -dr com.apple.quarantine /Applications/"Claude Desktop Profiles.app"
 ```
+4. Open the app normally — it will launch without any warning
 
 ---
 
