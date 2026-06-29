@@ -40,6 +40,6 @@ coverage/
 # Local config
 .npmrc
 
-# Internal dev docs (AI planning sessions, local prompts)
-docs/superpowers/
-docs/prompts/
+# Internal dev docs (AI planning sessions, local prompts, architecture notes)
+docs/
+CLAUDE.md
