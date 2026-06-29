@@ -66,6 +66,19 @@ export class StorageError extends AppError {
   }
 }
 
+export class ProfileRunningError extends AppError {
+  readonly code = 'PROFILE_RUNNING' as const
+
+  constructor(public readonly profileId: string) {
+    super(`Profile is currently running: ${profileId}`)
+  }
+}
+
+export type CleanupError =
+  | ProfileRunningError
+  | ProfileNotFoundError
+  | StorageError
+
 export type ProfileError =
   | ProfileNotFoundError
   | ProfileAlreadyExistsError
