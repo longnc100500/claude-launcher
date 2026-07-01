@@ -47,6 +47,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.0.7] — 2026-07-01
+
+### Fixed
+
+- macOS: clicking Launch on an already-running profile could freeze the whole app. The focus-existing-window call used `spawnSync('osascript', ...)`, which blocks the entire (single-threaded) main process until the AppleScript call returns — including any time spent waiting on a macOS Automation permission prompt for a freshly (re-)signed build. Switched to non-blocking `spawn`, matching the pattern already used in the tray menu's focus handler.
+
+---
+
 ## [0.0.1] — 2026-06-27
 
 - Initial project scaffolding
