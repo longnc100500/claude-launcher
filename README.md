@@ -73,6 +73,12 @@ Claude Desktop naturally reads and writes all its data under `HOME`, so each pro
 
 On **Windows**, the launcher sets `USERPROFILE` and `APPDATA` instead of `HOME`.
 
+### ⚠️ Windows — Cowork VM bundles are not isolated
+
+Claude's Cowork feature uses a Windows service (`CoworkVMService`) that runs at the machine level and resolves VM bundles from the MSIX package's system-wide cache — not from the profile-specific directory. This means **Cowork sessions and VM bundles are shared across all profiles** and cannot be isolated by the launcher.
+
+If you use Cowork on Windows, be aware that Cowork activity in one profile may be visible in another.
+
 ### ⚠️ Windows login — use email + verification code
 
 When signing in to a profile on Windows, **do not use "Continue with browser"**. The browser redirect opens Claude's auth flow in your default browser and completes the login in the system-level Claude session — not in the isolated profile you launched.
