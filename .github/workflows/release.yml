@@ -86,7 +86,10 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          draft: true
+          # draft releases fail to link to their tag on GitHub right after the
+          # tag is pushed (release ends up under a "untagged-<hash>" URL and
+          # 404s on the get-release-by-tag API) — publishing directly avoids it.
+          draft: false
           generate_release_notes: true
           files: |
             mac-build/*
