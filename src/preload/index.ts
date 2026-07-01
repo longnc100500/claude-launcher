@@ -20,11 +20,6 @@ const profilesApi: ClaudeApi['profiles'] = {
   delete: (id: ProfileId) =>
     ipcRenderer.invoke(IPC_CHANNELS.PROFILES_DELETE, { id }),
 
-  diskUsage: (id: ProfileId) =>
-    ipcRenderer.invoke(IPC_CHANNELS.PROFILES_DISK_USAGE, { id }),
-
-  cleanup: (id: ProfileId) =>
-    ipcRenderer.invoke(IPC_CHANNELS.PROFILES_CLEANUP, { id }),
 }
 
 const launcherApi: ClaudeApi['launcher'] = {
@@ -57,10 +52,26 @@ const settingsApi: ClaudeApi['settings'] = {
     ipcRenderer.invoke(IPC_CHANNELS.SETTINGS_SAVE, settings),
 }
 
+const sessionsApi: ClaudeApi['sessions'] = {
+  listProjects: (sourceProfileId: string) =>
+    ipcRenderer.invoke(IPC_CHANNELS.SESSIONS_LIST_PROJECTS, { sourceProfileId }),
+
+  listSessionFiles: (sourceProfileId: string, projectId: string) =>
+    ipcRenderer.invoke(IPC_CHANNELS.SESSIONS_LIST_FILES, { sourceProfileId, projectId }),
+
+  sync: (
+    sourceProfileId: string,
+    sessionFiles: Array<{ projectId: string; sessionId: string }>,
+    targetProfileIds: string[],
+  ) =>
+    ipcRenderer.invoke(IPC_CHANNELS.SESSIONS_SYNC, { sourceProfileId, sessionFiles, targetProfileIds }),
+}
+
 export type { ClaudeApi }
 
 contextBridge.exposeInMainWorld('claudeApi', {
   profiles: profilesApi,
   launcher: launcherApi,
   settings: settingsApi,
+  sessions: sessionsApi,
 })

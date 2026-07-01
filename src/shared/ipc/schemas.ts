@@ -40,14 +40,27 @@ export const AppSettingsSchema = z.object({
   launchOnStartup: z.boolean(),
 })
 
-export const DiskUsageResultSchema = z.object({
-  bytes: z.number().nonnegative(),
+export const SessionsListProjectsInputSchema = z.object({
+  sourceProfileId: ProfileIdSchema,
 })
 
-export const CleanupResultSchema = z.object({
-  bytesFreed: z.number().nonnegative(),
+export const SessionsListFilesInputSchema = z.object({
+  sourceProfileId: ProfileIdSchema,
+  projectId: z.string().min(1),
+})
+
+export const SyncSessionsInputSchema = z.object({
+  sourceProfileId: ProfileIdSchema,
+  sessionFiles: z.array(z.object({
+    projectId: z.string().min(1),
+    sessionId: z.string().min(1),
+  })).min(1),
+  targetProfileIds: z.array(ProfileIdSchema).min(1, 'At least one target profile is required'),
 })
 
 export type CreateProfileInputSchemaType = z.infer<typeof CreateProfileInputSchema>
 export type UpdateProfileInputSchemaType = z.infer<typeof UpdateProfileInputSchema>
 export type AppSettingsSchemaType = z.infer<typeof AppSettingsSchema>
+export type SessionsListProjectsInputSchemaType = z.infer<typeof SessionsListProjectsInputSchema>
+export type SessionsListFilesInputSchemaType = z.infer<typeof SessionsListFilesInputSchema>
+export type SyncSessionsInputSchemaType = z.infer<typeof SyncSessionsInputSchema>

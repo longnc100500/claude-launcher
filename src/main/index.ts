@@ -11,6 +11,8 @@ import { LaunchService } from '../services/launchService'
 import { registerProfileHandlers } from './ipc/profileHandlers'
 import { registerSettingsHandlers } from './ipc/settingsHandlers'
 import { registerLaunchHandlers } from './ipc/launchHandlers'
+import { SessionSyncService } from '../services/sessionSyncService'
+import { registerSessionHandlers } from './ipc/sessionHandlers'
 import { IPC_CHANNELS } from '../shared/ipc/channels'
 import type { ProfileId } from '../domain/profile'
 
@@ -87,6 +89,7 @@ app.whenReady().then(() => {
     profilesBaseDir: `${userData}/profiles`,
   })
   const launchService = new LaunchService(profileService, fs)
+  const sessionSyncService = new SessionSyncService(profileRepo, fs)
 
   _forwardCtx = { launchService, profileService, settingsRepo }
 
@@ -97,9 +100,10 @@ app.whenReady().then(() => {
   }
 
   // Register IPC handlers
-  registerProfileHandlers(ipcMain, profileService, fs, launchService)
+  registerProfileHandlers(ipcMain, profileService)
   registerSettingsHandlers(ipcMain, settingsRepo)
   registerLaunchHandlers(ipcMain, launchService, settingsRepo)
+  registerSessionHandlers(ipcMain, sessionSyncService)
 
   // Push process exit notifications to renderer and rebuild tray
   launchService.onProcessExit((profileId) => {

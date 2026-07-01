@@ -10,7 +10,7 @@ import { ProfileList } from './components/ProfileList'
 import { CreateProfileDialog } from './components/CreateProfileDialog'
 import { EditProfileDialog } from './components/EditProfileDialog'
 import { DeleteConfirmDialog } from './components/DeleteConfirmDialog'
-import { CleanupConfirmDialog } from './components/CleanupConfirmDialog'
+import { SyncSessionsDialog } from './components/SyncSessionsDialog'
 import { QuickSwitcher } from './components/QuickSwitcher'
 import { Button } from './components/ui/button'
 import { toast } from './components/ui/toast'
@@ -28,7 +28,7 @@ export default function App(): React.JSX.Element {
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null)
   const [deletingProfile, setDeletingProfile] = useState<Profile | null>(null)
-  const [cleaningProfile, setCleaningProfile] = useState<Profile | null>(null)
+  const [syncingProfile, setSyncingProfile] = useState<Profile | null>(null)
   const [showQuickSwitcher, setShowQuickSwitcher] = useState(false)
 
   useKeyboardShortcuts({
@@ -84,6 +84,11 @@ export default function App(): React.JSX.Element {
           </div>
         </div>
       </header>
+      {navigator.userAgent.includes('Windows') && (
+        <div className="px-6 py-2 text-xs text-yellow-300 bg-yellow-950/60 border-b border-yellow-900/50">
+          ⚠️ On Windows, Cowork VM bundles are shared across all profiles and are not isolated. Cowork sessions may not be separated between profiles.
+        </div>
+      )}
       <main className="p-6">
         {showSettings ? (
           <SettingsPage onClose={() => setShowSettings(false)} />
@@ -107,7 +112,7 @@ export default function App(): React.JSX.Element {
           }}
           onEdit={setEditingProfile}
           onDelete={setDeletingProfile}
-          onCleanup={setCleaningProfile}
+          onSync={setSyncingProfile}
           onCreateNew={() => setShowCreateDialog(true)}
         />
         )}
@@ -132,10 +137,10 @@ export default function App(): React.JSX.Element {
         onConfirm={handleDelete}
         onClose={() => setDeletingProfile(null)}
       />
-      <CleanupConfirmDialog
-        profile={cleaningProfile}
-        onClose={() => setCleaningProfile(null)}
-        onCleaned={() => setCleaningProfile(null)}
+      <SyncSessionsDialog
+        sourceProfile={syncingProfile}
+        allProfiles={profiles}
+        onClose={() => setSyncingProfile(null)}
       />
       {showQuickSwitcher && (
         <QuickSwitcher

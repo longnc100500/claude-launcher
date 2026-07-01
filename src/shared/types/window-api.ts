@@ -1,6 +1,7 @@
 import type { Profile, ProfileId, CreateProfileInput, UpdateProfileInput } from '../../domain/profile'
 import type { AppSettings } from '../../domain/settings'
 import type { RunningProcess, LaunchStatus } from '../../domain/launch'
+import type { SyncResult, ClaudeProject, ClaudeSessionFile } from '../../domain/session'
 import type { Result } from './result'
 
 export type ProfilesApi = {
@@ -9,8 +10,6 @@ export type ProfilesApi = {
   create: (input: CreateProfileInput) => Promise<Result<Profile>>
   update: (id: ProfileId, updates: UpdateProfileInput) => Promise<Result<Profile>>
   delete: (id: ProfileId) => Promise<Result<void>>
-  diskUsage: (id: ProfileId) => Promise<Result<{ bytes: number }>>
-  cleanup: (id: ProfileId) => Promise<Result<{ bytesFreed: number }>>
 }
 
 export type LauncherApi = {
@@ -26,8 +25,19 @@ export type SettingsApi = {
   save: (settings: AppSettings) => Promise<Result<void>>
 }
 
+export type SessionsApi = {
+  listProjects: (sourceProfileId: string) => Promise<Result<ReadonlyArray<ClaudeProject>>>
+  listSessionFiles: (sourceProfileId: string, projectId: string) => Promise<Result<ReadonlyArray<ClaudeSessionFile>>>
+  sync: (
+    sourceProfileId: string,
+    sessionFiles: Array<{ projectId: string; sessionId: string }>,
+    targetProfileIds: string[],
+  ) => Promise<Result<SyncResult>>
+}
+
 export type ClaudeApi = {
   profiles: ProfilesApi
   launcher: LauncherApi
   settings: SettingsApi
+  sessions: SessionsApi
 }

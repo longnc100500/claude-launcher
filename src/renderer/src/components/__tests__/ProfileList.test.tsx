@@ -1,5 +1,5 @@
 import React from 'react'
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import * as matchers from '@testing-library/jest-dom/matchers'
 expect.extend(matchers)
 import { render, screen, cleanup } from '@testing-library/react'
@@ -7,18 +7,6 @@ afterEach(() => cleanup())
 import { ProfileList } from '../ProfileList'
 import { createProfileId } from '../../../../domain/profile'
 import type { Profile } from '../../../../domain/profile'
-
-beforeEach(() => {
-  Object.defineProperty(window, 'claudeApi', {
-    value: {
-      profiles: {
-        diskUsage: vi.fn().mockResolvedValue({ ok: false, error: new Error('not implemented') }),
-      },
-    },
-    writable: true,
-    configurable: true,
-  })
-})
 
 function makeProfile(name = 'Work'): Profile {
   return {
@@ -41,7 +29,7 @@ const defaultProps = {
   onStop: noop,
   onEdit: noop,
   onDelete: noop,
-  onCleanup: noop,
+  onSync: noop,
   onCreateNew: noop,
 }
 
