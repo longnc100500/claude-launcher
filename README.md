@@ -20,12 +20,17 @@ Each profile gets its own home directory. Claude Desktop Profiles starts Claude 
 
 ## Features
 
-- **Multiple profiles** — create, rename, and delete profiles with emoji icons
-- **Full isolation** — separate sessions, cookies, MCP configs, and preferences per profile
-- **Auto-detect Claude Desktop** — finds the binary automatically on macOS, Windows, and Linux
-- **Live status** — see which profiles are currently running
-- **System tray** — minimize to tray, toggle the window, quit from anywhere
-- **Keyboard shortcuts** — `Cmd/Ctrl+N` to create, `Cmd/Ctrl+,` for settings, `Escape` to close dialogs
+### Multiple isolated profiles
+Create as many profiles as you need — work, personal, per-project. Each profile gets its own sessions, cookies, MCP server configs, and preferences. Launching a profile starts Claude Desktop with a completely separate home directory, so nothing leaks between profiles. The Claude Desktop binary is never modified and isolation survives app updates.
+
+### Session sync
+Copy Claude Code sessions from one profile to another. Open the Sync dialog on any profile card, browse projects, select sessions, pick target profiles, and sync. The sessions appear in Claude Desktop's Recent the next time you launch the target profile.
+
+### Other
+- Emoji icons, rename, delete
+- Live running status per profile
+- System tray support
+- Keyboard shortcuts: `Cmd/Ctrl+N` new profile, `Cmd/Ctrl+,` settings, `Escape` close
 
 ---
 
