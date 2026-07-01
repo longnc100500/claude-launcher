@@ -87,6 +87,19 @@ Instead, choose **"Sign in with email"** and use the verification code method. T
 
 ---
 
+## Troubleshooting
+
+### Claude Desktop updated itself — profiles won't launch anymore
+
+Claude Desktop auto-updates independently of Claude Desktop Profiles. On some platforms an update changes the binary's path, so the path saved in **Settings** goes stale:
+
+- **Windows**: the MSIX install path embeds the version, e.g. `C:\Program Files\WindowsApps\Claude_1.4_x64__xxx\app\claude.exe` — the `1.4` segment changes on every update.
+- **macOS/Linux**: usually stays at the same path, but a manual reinstall or a move to a different location has the same effect.
+
+If Launch fails or errors with "binary not found" after Claude Desktop updates, open **Settings** in Claude Desktop Profiles and re-select the Claude Desktop binary path (see [Finding the Claude Desktop binary](#finding-the-claude-desktop-binary) below).
+
+---
+
 ## Build from source
 
 **Prerequisites:** Node.js 20+, pnpm 9+
